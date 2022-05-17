@@ -1,26 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tododay/screens/add%20_task_screen.dart';
+import 'package:tododay/models/task_data.dart';
 import 'package:tododay/widgets/tasks_list.dart';
+import 'add_task_screen.dart';
+import 'package:provider/provider.dart';
 
-import '../models/task.dart';
-
-class TasksScreen extends StatefulWidget {
-  const TasksScreen({Key? key}) : super(key: key);
-
-  @override
-  State<TasksScreen> createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-
-  List<Task> tasks = [
-    Task(name: "Shopping"),
-    Task(name: "Working"),
-    Task(name: "GYM"),
-    Task(name: "Market"),
-    Task(name: "Market"),
-  ];
-
+class TasksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +51,7 @@ class _TasksScreenState extends State<TasksScreen> {
               Row(
                 children:  [
                   Text(
-                    "${tasks.length} Tasks",
+                    "${Provider.of<TaskData>(context).tasks.length} Tasks",
                     style: const TextStyle(
                         color: Colors.white,
                         fontSize: 18,
@@ -87,7 +71,7 @@ class _TasksScreenState extends State<TasksScreen> {
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
-                      child: TasksList(tasks),
+                      child: TasksList(),
                     ),
                   )
                 ],
@@ -106,10 +90,6 @@ class _TasksScreenState extends State<TasksScreen> {
         child: Container(
           padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: AddTaskScreen((newTaskTitle){
-            setState(() {
-              tasks.add(Task(name: newTaskTitle));
-              Navigator.pop(context);
-            });
           }),
         ),
       ),
